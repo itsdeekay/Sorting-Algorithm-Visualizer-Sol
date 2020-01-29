@@ -40,6 +40,9 @@ class Array:
 
     def get_len(self):
         return len(self.values)
+    
+    def max(self):
+        return max(self.values)
 
 
 def bubble_sort(nums):  # n^2
@@ -212,3 +215,33 @@ def quick_sort(nums):  # n^2
             _quick_sort(items, split_index + 1, high)
 
     _quick_sort(nums, 0, nums.get_len() - 1)
+
+def count_sort(nums): 
+  
+    # The output character array that will have sorted arr 
+    output = [0 for i in range(nums.get_len())] 
+    # Create a count array to store count of inidividul 
+    # characters and initialize count array as 0 
+    count = [0 for i in range(nums.max()+1)] 
+  
+  
+    # Store count of each character 
+    for i in range(nums.get_len()):
+        #print(nums.values[i])
+        count[nums.values[i]] += 1
+
+    # Change count[i] so that count[i] now contains actual 
+    # position of this character in output array 
+    for i in range(1,nums.get_len()): 
+        count[i] += count[i-1] 
+    
+    # Build the output character array 
+    for i in range(nums.get_len()): 
+        output[count[nums.values[i]]-1] = nums.values[i] 
+        count[nums.values[i]] -= 1
+  
+    # Copy the output array to arr, so that arr now 
+    # contains sorted characters
+    for i in range(nums.get_len()): 
+        nums.set(i,output[i]) 
+    
